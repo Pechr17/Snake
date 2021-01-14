@@ -2,7 +2,7 @@
 
 namespace Snake
 {
-    class Program
+    class Body
     {
         static void Main(string[] args)
         {
