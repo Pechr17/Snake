@@ -14,7 +14,7 @@ namespace Snake
     class board
     {
         bool terminate; 
-        bool is_started;
+        bool is_started; bool first_move;
         public int rows, columns;
         public List<List<char>> game; //the board
         private static Random rnd = new Random(); //used to generate apple position
@@ -36,7 +36,7 @@ namespace Snake
 
         public void initGame()
         {
-
+            first_move = true;
             Console.CursorVisible = false;
             terminate = false;
             is_started = false;
@@ -48,7 +48,7 @@ namespace Snake
 
             for (int i = boody.length; i > 0 ; i--)
             {
-                boody.head_x.Add((rows / 2) + 1 - i);
+                boody.head_x.Add((rows / 2) + 1 + i);
                 boody.head_y.Add(columns / 2 + 1);
             }
             
@@ -108,17 +108,40 @@ namespace Snake
             
         }
 
-        bool collisionControl()
+        bool collisionControl(int next_x, int next_y)
         {
             if (is_started && !terminate)
             {
-                if ((game[boody.head_x[boody.length - 1]][boody.head_y[boody.length - 1]] == 'X' || game[boody.head_x[boody.length - 1]][boody.head_y[boody.length - 1]] == '-'))
+
+                if (game[next_x][next_y] == 'X')
                 {
-                    terminate = !terminate;
                     Console.SetCursorPosition(columns / 2 + 1 - 4, rows / 2 + 1); Console.Write("You Loose");
                     return false;
                 }
-                else if (boody.head_x[boody.length - 1] == applePos[0] && boody.head_y[boody.length - 1] == applePos[1])
+                else if (boody.head_x.Contains(next_x) && boody.head_y.Contains(next_y))
+                {
+                    if (boody.head_y[boody.head_x.IndexOf(next_x)] == next_y || boody.head_x[boody.head_y.IndexOf(next_y)] == next_x)
+                    {
+                        int tmpx = boody.head_x.IndexOf(next_x); int tmpy = boody.head_y.IndexOf(next_y);
+                        if (!(boody.head_x.IndexOf(next_x) == 0) || !(boody.head_y.IndexOf(next_y) == 0))
+                        {
+                            //terminate = !terminate;
+                            Console.SetCursorPosition(columns / 2 + 1 - 4, rows / 2 + 1); Console.Write("You Loose"); 
+
+                            return false;
+                        }
+                    }
+                }
+
+                /*f(boody.head_x.IndexOf(next_x) == boody.head_y.IndexOf(next_y))//(boody.head_x.Contains(next_x) && boody.head_y.Contains(next_y)))
+                {
+                    if(boody.head_x.Contains(next_x) && boody.head_y.Contains(next_y))
+                    {
+                        */
+
+
+
+                else if (next_x == applePos[0] && next_y == applePos[1])
                 {
                     appleIsEaten = true;
                 }
@@ -128,7 +151,8 @@ namespace Snake
         }
         void update_Pos()
         {
-            int tmp = 0; //used to update direction of snake
+            int tmp_x = 0; //used to update direction of snake
+            int tmp_y = 0;
             if (Console.KeyAvailable)
             {
                 is_started = true;
@@ -139,43 +163,82 @@ namespace Snake
             {
                 case ConsoleKey.LeftArrow:
                     {
-                        tmp = boody.head_x[boody.length - 1];
-                        tmp--;
-                        boody.head_x.Add(tmp);
-                        boody.head_y.Add(boody.head_y[boody.length-1]);
+                        tmp_x = boody.head_x[boody.length - 1];
+                        tmp_x--;
+                        tmp_y = boody.head_y[boody.length - 1];
+                        if (collisionControl(tmp_x, tmp_y))
+                        {
+                            boody.head_x.Add(tmp_x);
+                            boody.head_y.Add(tmp_y);
+                        }
+                        else
+                        {
+                            terminate = true;
+                        }                       
 
                         break;
                     }
                 case ConsoleKey.UpArrow:
                     {
-                        tmp = boody.head_y[boody.length - 1];
-                        tmp--;
-                        boody.head_x.Add(boody.head_x[boody.length-1]);
-                        boody.head_y.Add(tmp);
-
+                        tmp_x = boody.head_x[boody.length - 1];
+                        tmp_y = boody.head_y[boody.length - 1];
+                        tmp_y--;
+                        if (collisionControl(tmp_x, tmp_y))
+                        {
+                            boody.head_x.Add(tmp_x);
+                            boody.head_y.Add(tmp_y);
+                        }
+                        else
+                        {
+                            terminate = true;
+                        }
                         break;
                     }
                 case ConsoleKey.RightArrow:
                     {
-                        tmp = boody.head_x[boody.length - 1];
-                        tmp++;
-                        boody.head_x.Add(tmp);
-                        boody.head_y.Add(boody.head_y[boody.length-1]);
+                        if(first_move) //If the first direction is in right direction, the list is reversed
+                        {
+                            boody.head_x.Reverse();
+                            first_move = false;
+                        }
+                        
+                        tmp_x = boody.head_x[boody.length - 1];
+                        tmp_y = boody.head_y[boody.length - 1];
+                        tmp_x++;
+                        if (collisionControl(tmp_x, tmp_y))
+                        {
+                            boody.head_x.Add(tmp_x);
+                            boody.head_y.Add(tmp_y);
+                        }
+                        else
+                        {
+                            terminate = true;
+                        }
 
                         break;
                     }
                 case ConsoleKey.DownArrow:
                     {
-                        tmp = boody.head_y[boody.length - 1];
-                        tmp++;
-                        boody.head_x.Add(boody.head_x[boody.length-1]);
-                        boody.head_y.Add(tmp);
+                        tmp_y = boody.head_y[boody.length - 1];
+                        tmp_x = boody.head_x[boody.length - 1];
+                        tmp_y++;
+                        if (collisionControl(tmp_x, tmp_y))
+                        {
+                            boody.head_x.Add(tmp_x);
+                            boody.head_y.Add(tmp_y);
+                        }
+                        else
+                        {
+                            terminate = true;
+                        }
 
                         break;
                     }
                 case ConsoleKey.Q:
                     {
                         terminate = true;
+                        Console.SetCursorPosition(0, rows + 2);
+                        Console.WriteLine("you quit the game");
                         break;
                     }
                 default:
@@ -193,19 +256,22 @@ namespace Snake
 
                 update_Pos();
 
-                if(collisionControl())
+                if(!terminate && is_started)
                 {
-                    Console.SetCursorPosition(boody.head_x[boody.length], boody.head_y[boody.length]); Console.Write('-');
-
+                    
                     if (appleIsEaten)
                     {
+                        Console.SetCursorPosition(boody.head_x[boody.length], boody.head_y[boody.length]); Console.Write('-');
                         boody.length++;
                     }
                     else 
-                    { 
+                    {
                         Console.SetCursorPosition(boody.head_x[0], boody.head_y[0]); Console.Write(' ');
                         boody.head_x.RemoveAt(0); boody.head_y.RemoveAt(0);
+                        Console.SetCursorPosition(boody.head_x[boody.length - 1], boody.head_y[boody.length - 1]); Console.Write('-');
                     }
+                    
+
                 }
                 if (appleIsEaten)
                 {
@@ -214,7 +280,7 @@ namespace Snake
 
             }
             
-            Console.SetCursorPosition(0, rows + 2);
+            Console.SetCursorPosition(0, rows + 3);
           
         }
     }
