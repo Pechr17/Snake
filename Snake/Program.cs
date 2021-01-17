@@ -4,11 +4,11 @@ using System.Threading;
 
 namespace Snake
 {
+
     public struct snakebody
     {
         public List<int> head_x, head_y;
         public int score;
-        
         public int length;
     }
     class board
@@ -24,6 +24,7 @@ namespace Snake
         private ConsoleKeyInfo key;
         snakebody boody = new snakebody();
         string direction = "start";
+        public List<int> high_score;
 
         public board(int r, int c, string sp)
         {
@@ -52,9 +53,11 @@ namespace Snake
             terminate = false;
             is_started = false;
             game = new List<List<char>>();
+            high_score = new List<int>();
             boody.length = 3;
             boody.head_x = new List<int>();
             boody.head_y = new List<int>();
+
 
             for (int i = boody.length; i > 0 ; i--)
             {
@@ -136,8 +139,9 @@ namespace Snake
                         int tmpx = boody.head_x.IndexOf(next_x); int tmpy = boody.head_y.IndexOf(next_y);
                         if (!(boody.head_x.IndexOf(next_x) == 0) || !(boody.head_y.IndexOf(next_y) == 0))
                         {
-                            //terminate = !terminate;
-                            Console.SetCursorPosition(columns / 2 + 1 - 4, rows / 2 + 1); Console.Write("You Loose"); 
+                           //terminate = !terminate;
+                           Console.SetCursorPosition(columns / 2 + 1 - 4, rows / 2 + 1); Console.Write("You Loose");
+                            
 
                             return false;
                         }
@@ -335,6 +339,14 @@ namespace Snake
         }
 
       
+        public void WriteHighscore()
+        {
+            high_score.Add(boody.score);
+            high_score.Sort();
+                      
+
+        }
+
         public void updateBoard()
         {
             appleIsEaten = false;
@@ -369,6 +381,7 @@ namespace Snake
                 }
 
             }
+            high_score.Add(boody.score);
             
             Console.SetCursorPosition(0, rows + 3);
           
