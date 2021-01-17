@@ -24,19 +24,13 @@ namespace Snake
         private ConsoleKeyInfo key;
         snakebody boody = new snakebody();
         string direction = "start";
+        string speedMode;
 
-        public board(int r, int c, string sp)
+        public board(int r, int c)
         {
             rows = r;
             columns = c;
-            switch(sp)
-            {
-                case "Easy":
-                    {
-                        speed = 500;
-                        break;
-                    }
-            }
+                       
         }
         public board(int size)
         {
@@ -44,6 +38,28 @@ namespace Snake
             columns = size;
         }
 
+        public void changeMode(string sp)
+        {
+            speedMode = sp;
+            switch (sp)
+            {
+                case "Easy":
+                    {
+                        speed = 400;
+                        break;
+                    }
+                case "Normal":
+                    {
+                        speed = 200;
+                        break;
+                    }
+                case "Hard":
+                    {
+                        speed = 100;
+                        break;
+                    }
+            }
+        }
         public void initGame()
         {
             first_move = true;
@@ -115,7 +131,8 @@ namespace Snake
                 }
                 Console.WriteLine();
             }
-            Console.SetCursorPosition(0, rows + 3); Console.Write("Score = " + boody.score);
+            Console.SetCursorPosition(0, rows + 2); Console.WriteLine("Gamemode: " + speedMode);
+            /*Console.SetCursorPosition(0, rows + 3);*/ Console.Write("Score = " + boody.score);
             
         }
 
@@ -167,7 +184,7 @@ namespace Snake
             if (Console.KeyAvailable)
             {
                 is_started = true;
-                key = Console.ReadKey();
+                key = Console.ReadKey(true);
             }
 
             switch (key.Key)

@@ -16,10 +16,16 @@ namespace Snake
           //  L1.StartServer();
 
             
-            string play;
-            board t1 = new board(25);
+            string play, playmode;
+            
+            
+            board t1 = new board(25,25);
             do
             {
+                Console.WriteLine("Enter gamemode: Easy, Normal or Hard!");
+                playmode = Console.ReadLine();
+
+                t1.changeMode(playmode);
                 t1.initGame();
                 t1.updateBoard();
 
