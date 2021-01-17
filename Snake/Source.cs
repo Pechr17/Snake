@@ -21,7 +21,7 @@ namespace Snake
             
             board t1 = new board(25,25);
             do
-            {
+            { 
                 Console.WriteLine("Enter gamemode: Easy, Normal or Hard!");
                 playmode = Console.ReadLine();
 

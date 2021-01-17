@@ -116,18 +116,23 @@ namespace Snake
         }
         void ChangeapplePos()
         {
-            //Console.SetCursorPosition(applePos[0], applePos[1]); Console.Write(' ');
-
-   
             applePos[0] = rnd.Next(1, rows); applePos[1] = rnd.Next(1, columns);
             while(boody.head_x.Contains(applePos[0]) && boody.head_y.Contains(applePos[1]))
             {
-                if(boody.head_y[boody.head_x.IndexOf(applePos[0])] == applePos[1] || boody.head_x[boody.head_y.IndexOf(applePos[1])] == applePos[0])
-                applePos[0] = rnd.Next(1, rows); applePos[1] = rnd.Next(1, columns);
+                if (boody.head_y[boody.head_x.IndexOf(applePos[0])] == applePos[1] || boody.head_x[boody.head_y.IndexOf(applePos[1])] == applePos[0])
+                {
+                    applePos[0] = rnd.Next(1, rows); 
+                    applePos[1] = rnd.Next(1, columns);
+                }
+                else
+                {
+                    break;
+                }
             }
 
             appleIsEaten = false;
             Console.SetCursorPosition(applePos[0], applePos[1]); Console.Write('A'); // Apple 
+            
         }
         public void printBoard()
         {
@@ -141,7 +146,7 @@ namespace Snake
                 Console.WriteLine();
             }
             Console.SetCursorPosition(0, rows + 2); Console.WriteLine("Gamemode: " + speedMode);
-            /*Console.SetCursorPosition(0, rows + 3);*/ Console.Write("Score = " + boody.score + "       High Score = " + high_score[high_score.Count - 1]);
+            Console.Write("Score = " + boody.score + "       High Score = " + high_score[high_score.Count - 1]);
             
         }
 
@@ -153,6 +158,7 @@ namespace Snake
                 if (game[next_x][next_y] == 'X')
                 {
                     Console.SetCursorPosition(columns / 2 + 1 - 4, rows / 2 + 1); Console.Write("You Lose");
+                    Console.SetCursorPosition(columns / 2 + 1 - 8, rows / 2 + 2); Console.Write("Your score was: " + boody.score);
                     return false;
                 }
                 else if (boody.head_x.Contains(next_x) && boody.head_y.Contains(next_y))
@@ -164,21 +170,12 @@ namespace Snake
                         {
                            //terminate = !terminate;
                            Console.SetCursorPosition(columns / 2 + 1 - 4, rows / 2 + 1); Console.Write("You Lose");
-                            
+                           Console.SetCursorPosition(columns / 2 + 1 - 8, rows / 2 + 2); Console.Write("Your score was: " + boody.score);
 
-                            return false;
+                           return false;
                         }
                     }
                 }
-
-                /*f(boody.head_x.IndexOf(next_x) == boody.head_y.IndexOf(next_y))//(boody.head_x.Contains(next_x) && boody.head_y.Contains(next_y)))
-                {
-                    if(boody.head_x.Contains(next_x) && boody.head_y.Contains(next_y))
-                    {
-                        */
-
-
-
                 else if (next_x == applePos[0] && next_y == applePos[1])
                 {
                     appleIsEaten = true;
