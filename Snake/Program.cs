@@ -7,7 +7,7 @@ namespace Snake
     public struct snakebody
     {
         public List<int> head_x, head_y;
-        //public int tail_x, tail_y;
+        public int score;
         
         public int length;
     }
@@ -38,6 +38,7 @@ namespace Snake
         public void initGame()
         {
             first_move = true;
+            boody.score = 0;
             Console.CursorVisible = false;
             terminate = false;
             is_started = false;
@@ -105,6 +106,7 @@ namespace Snake
                 }
                 Console.WriteLine();
             }
+            Console.SetCursorPosition(0, rows + 3); Console.Write("Score = " + boody.score);
             
         }
 
@@ -159,8 +161,6 @@ namespace Snake
                 key = Console.ReadKey();
             }
 
-            
-            
             switch (key.Key)
             {
                 case ConsoleKey.LeftArrow:
@@ -196,7 +196,6 @@ namespace Snake
                                 terminate = true;
                             }
                         }
-                        
 
                         break;
                     }
@@ -306,6 +305,8 @@ namespace Snake
                     {
                         Console.SetCursorPosition(boody.head_x[boody.length], boody.head_y[boody.length]); Console.Write('-');
                         boody.length++;
+                        boody.score++;
+                        Console.SetCursorPosition(0, rows + 3); Console.Write("Score = " + boody.score);
                     }
                     else 
                     {

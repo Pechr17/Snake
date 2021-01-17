@@ -78,7 +78,7 @@ namespace Snake
                 // Create a TCP/IP  socket.    
                 Socket sender = new Socket(ipAddress.AddressFamily,
                     SocketType.Stream, ProtocolType.Tcp);
-
+                /* */
                 // Connect the socket to the remote endpoint. Catch any errors.    
                 try
                 {
