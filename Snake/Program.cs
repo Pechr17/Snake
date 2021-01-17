@@ -23,6 +23,7 @@ namespace Snake
         private bool appleIsEaten = true;
         private ConsoleKeyInfo key;
         snakebody boody = new snakebody();
+        
         string direction = "start";
         string speedMode;
 
@@ -58,6 +59,11 @@ namespace Snake
                         speed = 100;
                         break;
                     }
+                default:
+                    {
+                        speed = 400;
+                        break;
+                    }
             }
         }
         public void initGame()
@@ -91,10 +97,8 @@ namespace Snake
                     {
                         game[i].Add(' ');
                     }
-                }
-                
+                }              
             }
-            
 
             for (int k = 0; k < boody.length; k++)
             {
@@ -112,8 +116,9 @@ namespace Snake
 
    
             applePos[0] = rnd.Next(1, rows); applePos[1] = rnd.Next(1, columns);
-            while(game[applePos[0]][applePos[1]] != ' ')
+            while(boody.head_x.Contains(applePos[0]) && boody.head_y.Contains(applePos[1]))
             {
+                if(boody.head_y[boody.head_x.IndexOf(applePos[0])] == applePos[1] || boody.head_x[boody.head_y.IndexOf(applePos[1])] == applePos[0])
                 applePos[0] = rnd.Next(1, rows); applePos[1] = rnd.Next(1, columns);
             }
 
@@ -132,7 +137,7 @@ namespace Snake
                 Console.WriteLine();
             }
             Console.SetCursorPosition(0, rows + 2); Console.WriteLine("Gamemode: " + speedMode);
-            /*Console.SetCursorPosition(0, rows + 3);*/ Console.Write("Score = " + boody.score);
+            Console.Write("Score = " + boody.score);
             
         }
 
