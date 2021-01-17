@@ -237,42 +237,79 @@ namespace Snake
                     }
                 case ConsoleKey.RightArrow:
                     {
-                        direction = "right";
-                        if(first_move) //If the first direction is in right direction, the list is reversed
+                        if (direction != "left")
                         {
-                            boody.head_x.Reverse();
-                            first_move = false;
+                            direction = "right";
+                            if (first_move) //If the first direction is in right direction, the list is reversed
+                            {
+                                boody.head_x.Reverse();
+                                first_move = false;
+                            }
+
+                            tmp_x = boody.head_x[boody.length - 1];
+                            tmp_y = boody.head_y[boody.length - 1];
+                            tmp_x++;
+                            if (collisionControl(tmp_x, tmp_y))
+                            {
+                                boody.head_x.Add(tmp_x);
+                                boody.head_y.Add(tmp_y);
+                            }
+                            else
+                            {
+                                terminate = true;
+                            }
                         }
-                        
-                        tmp_x = boody.head_x[boody.length - 1];
-                        tmp_y = boody.head_y[boody.length - 1];
-                        tmp_x++;
-                        if (collisionControl(tmp_x, tmp_y))
+                        else if (direction == "left")
                         {
-                            boody.head_x.Add(tmp_x);
-                            boody.head_y.Add(tmp_y);
-                        }
-                        else
-                        {
-                            terminate = true;
+                            tmp_x = boody.head_x[boody.length - 1];
+                            tmp_x--;
+                            tmp_y = boody.head_y[boody.length - 1];
+                            if (collisionControl(tmp_x, tmp_y))
+                            {
+                                boody.head_x.Add(tmp_x);
+                                boody.head_y.Add(tmp_y);
+                            }
+                            else
+                            {
+                                terminate = true;
+                            }
                         }
 
                         break;
                     }
                 case ConsoleKey.DownArrow:
                     {
-                        direction = "down";
-                        tmp_y = boody.head_y[boody.length - 1];
-                        tmp_x = boody.head_x[boody.length - 1];
-                        tmp_y++;
-                        if (collisionControl(tmp_x, tmp_y))
+                        if (direction != "up")
                         {
-                            boody.head_x.Add(tmp_x);
-                            boody.head_y.Add(tmp_y);
+                            direction = "down";
+                            tmp_y = boody.head_y[boody.length - 1];
+                            tmp_x = boody.head_x[boody.length - 1];
+                            tmp_y++;
+                            if (collisionControl(tmp_x, tmp_y))
+                            {
+                                boody.head_x.Add(tmp_x);
+                                boody.head_y.Add(tmp_y);
+                            }
+                            else
+                            {
+                                terminate = true;
+                            }
                         }
-                        else
+                        else if (direction == "up")
                         {
-                            terminate = true;
+                            direction = "up";
+                            tmp_x = boody.head_x[boody.length - 1];
+                            tmp_y = boody.head_y[boody.length - 1];
+                            tmp_y--;
+                            if (collisionControl(tmp_x, tmp_y))
+                            {
+                                boody.head_x.Add(tmp_x);
+                                boody.head_y.Add(tmp_y);
+                            }
+                            else
+                            {
+                                terminate = true;
+                            }
                         }
 
                         break;
