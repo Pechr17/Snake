@@ -13,6 +13,7 @@ namespace Snake
     }
     class board
     {
+        int speed;
         bool terminate; 
         bool is_started; bool first_move;
         public int rows, columns;
@@ -24,10 +25,18 @@ namespace Snake
         snakebody boody = new snakebody();
         string direction = "start";
 
-        public board(int r, int c)
+        public board(int r, int c, string sp)
         {
             rows = r;
             columns = c;
+            switch(sp)
+            {
+                case "Easy":
+                    {
+                        speed = 500;
+                        break;
+                    }
+            }
         }
         public board(int size)
         {
@@ -294,7 +303,7 @@ namespace Snake
             appleIsEaten = false;
             while(!terminate)
             {
-                Thread.Sleep(500); // update frequency
+                Thread.Sleep(speed); // update frequency
 
                 update_Pos();
 
