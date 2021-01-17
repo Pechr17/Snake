@@ -25,7 +25,7 @@ namespace Snake
         snakebody boody = new snakebody();
         string direction = "start";
         string speedMode;
-        public List<int> high_score;
+        public List<int> high_score = new List<int>();
 
         public board(int r, int c)
         {
@@ -69,11 +69,12 @@ namespace Snake
             terminate = false;
             is_started = false;
             game = new List<List<char>>();
-            high_score = new List<int>();
+            WriteHighscore();
             boody.length = 3;
             boody.head_x = new List<int>();
             boody.head_y = new List<int>();
-
+            direction = "start";
+            
 
             for (int i = boody.length; i > 0 ; i--)
             {
@@ -135,7 +136,7 @@ namespace Snake
                 Console.WriteLine();
             }
             Console.SetCursorPosition(0, rows + 2); Console.WriteLine("Gamemode: " + speedMode);
-            /*Console.SetCursorPosition(0, rows + 3);*/ Console.Write("Score = " + boody.score);
+            /*Console.SetCursorPosition(0, rows + 3);*/ Console.Write("Score = " + boody.score + "       High Score = " + high_score[high_score.Count - 1]);
             
         }
 
@@ -146,7 +147,7 @@ namespace Snake
 
                 if (game[next_x][next_y] == 'X')
                 {
-                    Console.SetCursorPosition(columns / 2 + 1 - 4, rows / 2 + 1); Console.Write("You Loose");
+                    Console.SetCursorPosition(columns / 2 + 1 - 4, rows / 2 + 1); Console.Write("You Lose");
                     return false;
                 }
                 else if (boody.head_x.Contains(next_x) && boody.head_y.Contains(next_y))
@@ -157,7 +158,7 @@ namespace Snake
                         if (!(boody.head_x.IndexOf(next_x) == 0) || !(boody.head_y.IndexOf(next_y) == 0))
                         {
                            //terminate = !terminate;
-                           Console.SetCursorPosition(columns / 2 + 1 - 4, rows / 2 + 1); Console.Write("You Loose");
+                           Console.SetCursorPosition(columns / 2 + 1 - 4, rows / 2 + 1); Console.Write("You Lose");
                             
 
                             return false;
@@ -361,7 +362,6 @@ namespace Snake
             high_score.Add(boody.score);
             high_score.Sort();
                       
-
         }
 
         public void updateBoard()
@@ -398,8 +398,8 @@ namespace Snake
                 }
 
             }
-            high_score.Add(boody.score);
             
+            WriteHighscore();
             Console.SetCursorPosition(0, rows + 3);
           
         }
