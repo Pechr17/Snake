@@ -9,11 +9,11 @@ namespace Snake
         
         static void Main(string[] args)
         {
-          //  SocketListener L1 = new SocketListener();
+            //  SocketListener L1 = new SocketListener();
             //SocketClient C1 = new SocketClient();
 
             //C1.StartClient();
-          //  L1.StartServer();
+            //  L1.StartServer();
 
             
             string play, playmode;
@@ -33,8 +33,10 @@ namespace Snake
 
                 Console.WriteLine("Wanna play again? [y/n]");
                 play = Console.ReadLine();
+                
 
             } while (play == "y");
+            
             
         }
     }
