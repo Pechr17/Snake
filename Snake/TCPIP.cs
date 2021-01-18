@@ -5,65 +5,25 @@ using System.Net;
 using System.Net.Sockets;
 
 namespace Snake
-{
-    public class SocketListener
-    {
-        public void StartServer()
-        {
-            IPHostEntry host = Dns.GetHostEntry("localhost");
-            IPAddress ipAddress = host.AddressList[0];
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
-
-            try
-            {
-                // Create a Socket that will use Tcp protocol      
-                Socket listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                // A Socket must be associated with an endpoint using the Bind method  
-                listener.Bind(localEndPoint);
-                // Specify how many requests a Socket can listen before it gives Server busy response.  
-                // We will listen 10 requests at a time  
-                listener.Listen(10);
-
-                Console.WriteLine("Waiting for a connection...");
-                Socket handler = listener.Accept();
-
-                // Incoming data from the client.    
-                string data = null;
-                byte[] bytes = null;
-
-                while (true)
-                {
-                    bytes = new byte[1024];
-                    int bytesRec = handler.Receive(bytes);
-                    data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-                    if (data.IndexOf("<EOF>") > -1)
-                    {
-                        break;
-                    }
-                }
-
-                Console.WriteLine("Text received : {0}", data);
-
-                byte[] msg = Encoding.ASCII.GetBytes(data);
-                handler.Send(msg);
-                handler.Shutdown(SocketShutdown.Both);
-                handler.Close();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-            Console.WriteLine("\n Press any key to continue...");
-            Console.ReadKey();
-        }
-    }
-
+{    
+    /// <summary>
+    /// Class used to establish and send message.
+    /// </summary>
     public class SocketClient
     {
+        Socket sender;
+        IPHostEntry host; 
+        IPAddress ipAddress;
+        IPEndPoint remoteEP; 
+
+        /// <summary>
+        /// Starts a TCP client with localhosts' IP address. Thus as written right now it
+        /// is only possible to transmit messages to a client on the same host.
+        /// To be able to transmit a message a client listening on the socket is to be started.
+        /// </summary>
         public void StartClient()
         {
-            byte[] bytes = new byte[1024];
+            byte[] bytes = new byte[1024]; //a variable used to store the message to be transmitted in
 
             try
             {
@@ -71,14 +31,14 @@ namespace Snake
                 // Get Host IP Address that is used to establish a connection  
                 // In this case, we get one IP address of localhost that is IP : 127.0.0.1  
                 // If a host has multiple addresses, you will get a list of addresses  
-                IPHostEntry host = Dns.GetHostEntry("localhost");
-                IPAddress ipAddress = host.AddressList[0];
-                IPEndPoint ip = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9999);
-                IPEndPoint remoteEP = new IPEndPoint(IPAddress.Parse("192.168.0.23"), 11000);
+                
+                host = Dns.GetHostEntry(Dns.GetHostName()); //finds host IP addresses
+                ipAddress = host.AddressList[0]; //Choose IP address from list
+                remoteEP = new IPEndPoint(ipAddress, 11000); 
 
                 // Create a TCP/IP  socket.    
-                Socket sender = new Socket(AddressFamily.InterNetwork,
-                    SocketType.Stream, ProtocolType.Tcp);
+                
+                sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 /* */
                 // Connect the socket to the remote endpoint. Catch any errors.    
                 try
@@ -90,7 +50,7 @@ namespace Snake
                         sender.RemoteEndPoint.ToString());
 
                     // Encode the data string into a byte array.    
-                    byte[] msg = Encoding.ASCII.GetBytes("This is a test<EOF>");
+                    byte[] msg = Encoding.ASCII.GetBytes("9");
 
                     // Send the data through the socket.    
                     int bytesSent = sender.Send(msg);
