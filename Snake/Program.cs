@@ -63,16 +63,19 @@ namespace Snake
             switch (sp)
             {
                 case "Easy":
+                case "easy":
                     {
                         speed = 400;
                         break;
                     }
                 case "Normal":
+                case "normal":
                     {
                         speed = 200;
                         break;
                     }
                 case "Hard":
+                case "hard":
                     {
                         speed = 100;
                         break;
@@ -81,6 +84,7 @@ namespace Snake
                     {
                         speedMode = "Easy";
                         speed = 400;
+                        Console.WriteLine("Input not recognised. Gamemode set to {0}.", speedMode);
                         break;
                     }
             }
