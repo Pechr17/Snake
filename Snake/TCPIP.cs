@@ -44,6 +44,7 @@ namespace Snake
                 try
                 {
                     // Connect to Remote EndPoint  
+                    
                     sender.Connect(remoteEP);
 
                     Console.WriteLine("Socket connected to {0}",
@@ -63,7 +64,7 @@ namespace Snake
                     // Release the socket.    
                     sender.Shutdown(SocketShutdown.Both);
                     sender.Close();
-
+                    
                 }
                 catch (ArgumentNullException ane)
                 {

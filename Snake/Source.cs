@@ -15,8 +15,9 @@ namespace Snake
             /*SocketClient C1 = new SocketClient(); //Peter
 
             C1.StartClient();
-            */
-                       
+            C1.StartClient();*/
+
+
             string play, playmode, ans; 
             
             //Rasmus
@@ -47,6 +48,7 @@ namespace Snake
             } while (play == "y");
             Console.Clear();
             t1.printHighScore(0);
+            Console.WriteLine();
         }
     }
 }
