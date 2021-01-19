@@ -12,13 +12,14 @@ namespace Snake
             /*This section is used to test the TCP/IP section
             However this functionality has not been implemented in the snake game
              */
-            /*SocketClient C1 = new SocketClient();
+            /*SocketClient C1 = new SocketClient(); //Peter
 
             C1.StartClient();
             */
-            /*           
+                       
             string play, playmode, ans; 
             
+            //Rasmus
             
             board t1 = new board(25,50); //creates a snake game of row x column dimension.
             
@@ -45,7 +46,7 @@ namespace Snake
 
             } while (play == "y");
             Console.Clear();
-            t1.printHighScore(0);*/
+            t1.printHighScore(0);
         }
     }
 }

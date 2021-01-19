@@ -11,7 +11,7 @@ namespace Snake
     /// A score is also associated with the snake, which is incremented each time an apple is eaten
     /// The length of the snake is also saved
     /// </summary>
-    public struct snakebody
+    public struct snakebody //Peter
     {
         public List<int> head_x, head_y;
         public int score;
@@ -36,7 +36,7 @@ namespace Snake
         public List<int> high_score = new List<int>();
         public Dictionary<string, int> high_score2 = new Dictionary<string, int>(); 
 
-        public board()
+        public board() //Peter
         {
             rows = 25;
             columns = 25;
@@ -47,7 +47,7 @@ namespace Snake
         /// <param name="r"></param>
         /// <param name="c"></param>
         
-        public board(int r, int c) 
+        public board(int r, int c) //Peter
         {
             rows = r;
             columns = c;
@@ -57,7 +57,7 @@ namespace Snake
         /// Sets the update frequency of the game and thus the speed of the snake.
         /// </summary>
         /// <param name="sp">Choose between Easy, Normal og Hard</param> 
-        public void changeMode(string sp)
+        public void changeMode(string sp) //Peter
         {
             speedMode = sp;
             switch (sp)
@@ -92,7 +92,7 @@ namespace Snake
         /// <summary>
         /// Initialises a game of rows x columns dimensions with the snake body in the middle
         /// </summary>
-        public void initGame()
+        public void initGame() //Rasmus
         {
             first_move = true;
             boody.score = 0;
@@ -144,7 +144,7 @@ namespace Snake
         /// Generates a random position for the apple.
         /// The position is stored in applePos[][]
         /// </summary>
-        void ChangeapplePos()
+        void ChangeapplePos()//Rasmus
         {
             applePos[0] = rnd.Next(1, columns); applePos[1] = rnd.Next(1, rows);
             while(boody.head_x.Contains(applePos[0]) && boody.head_y.Contains(applePos[1]))
@@ -166,7 +166,7 @@ namespace Snake
         /// <summary>
         /// Prints the board
         /// </summary>
-        public void printBoard()
+        public void printBoard() //Rasmus
         {
             Console.Clear();
             for (int i = 0; i < rows+2; i++)
@@ -190,7 +190,7 @@ namespace Snake
         /// <param name="next_y">Next y position of the snake head</param>
         /// <returns>False if the snake will colide. 
         /// True if the snake will not colide with an object.</returns>
-        bool collisionControl(int next_x, int next_y)
+        bool collisionControl(int next_x, int next_y) //Peter
         {
             if (is_started && !terminate)
             {
@@ -227,7 +227,7 @@ namespace Snake
         /// <summary>
         /// Updates the position of the snake. This is where the magic happens! 
         /// </summary>
-        void update_Pos()
+        void update_Pos() //Peter
         {
             int tmp_x = 0; //used to update direction of snake
             int tmp_y = 0;
@@ -403,7 +403,7 @@ namespace Snake
         /// <summary>
         /// prints the highest score
         /// </summary>
-        public void WriteHighscore()
+        public void WriteHighscore() //Rasmus
         {
             high_score.Add(boody.score);
             high_score.Sort();
@@ -412,7 +412,7 @@ namespace Snake
         /// <summary>
         /// Adds a dictionary containing a user and a score.
         /// </summary>
-        public void addHighscore()
+        public void addHighscore()//Rasmus
         {
             Console.WriteLine("Add score to highscore - type username: ");
             string user = Console.ReadLine();
@@ -444,7 +444,7 @@ namespace Snake
         /// Prints the highscore list. 
         /// </summary>
         /// <param name="start">Is used to move the highscore list to the side.</param>
-        public void printHighScore(int start)
+        public void printHighScore(int start)//Rasmus
         {
             Console.SetCursorPosition(start + 3, 0);
             Console.WriteLine("Highscore: ");
@@ -460,7 +460,7 @@ namespace Snake
         /// <summary>
         /// Updates the board thus enabling the snake to move. Probably it should be called play game or something.
         /// </summary>
-        public void updateBoard()
+        public void updateBoard()//Peter
         {
             appleIsEaten = false;
             while(!terminate)
