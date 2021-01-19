@@ -12,15 +12,15 @@ namespace Snake
             /*This section is used to test the TCP/IP section
             However this functionality has not been implemented in the snake game
              */
-            //SocketClient C1 = new SocketClient();
+            /*SocketClient C1 = new SocketClient();
 
-            //C1.StartClient();
-            
-                       
+            C1.StartClient();
+            */
+            /*           
             string play, playmode, ans; 
             
             
-            board t1 = new board(25,50); //creates a snake game of 25x25 dimension.
+            board t1 = new board(25,50); //creates a snake game of row x column dimension.
             
             do
             { 
@@ -30,10 +30,11 @@ namespace Snake
                 t1.changeMode(playmode);
                 
                 t1.initGame();
-                t1.updateBoard();
+                t1.updateBoard(); //play game. Terminates when either the player "dies" or an active quit is used
                 
                 Console.WriteLine("Do you want to add score to highscore? [y/n]");
                 ans = Console.ReadLine();
+
                 if(ans == "y" || ans == "yes")
                 {
                     t1.addHighscore();
@@ -44,8 +45,7 @@ namespace Snake
 
             } while (play == "y");
             Console.Clear();
-            t1.printHighScore(0);
-            
+            t1.printHighScore(0);*/
         }
     }
 }

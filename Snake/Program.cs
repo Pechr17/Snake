@@ -106,7 +106,7 @@ namespace Snake
             boody.head_y = new List<int>();
             direction = "start";
 
-                       
+            //Creates the matrix containing the board           
             for(int i = 0; i < rows + 2 ; i++)
             {
                 game.Add(new List<char>());
@@ -123,10 +123,6 @@ namespace Snake
                 }              
             }
 
-            /*for (int k = 0; k < boody.length; k++)
-            {
-                game[boody.head_x[k]][boody.head_y[k]] = '-';
-            }*/
             //Prints the board
             printBoard();
 
@@ -166,7 +162,6 @@ namespace Snake
 
             appleIsEaten = false;
             Console.SetCursorPosition(applePos[0], applePos[1]); Console.Write('A'); // Apple 
-            
         }
         /// <summary>
         /// Prints the board
@@ -210,6 +205,7 @@ namespace Snake
                     if (boody.head_y[boody.head_x.IndexOf(next_x)] == next_y || boody.head_x[boody.head_y.IndexOf(next_y)] == next_x)
                     {
                         int tmpx = boody.head_x.IndexOf(next_x); int tmpy = boody.head_y.IndexOf(next_y);
+                        //if the next coordinate is the tail of the snake, the snake is allowed to move, as the tail is going to move :)
                         if (!(boody.head_x.IndexOf(next_x) == 0) || !(boody.head_y.IndexOf(next_y) == 0))
                         {
                            Console.SetCursorPosition(columns / 2 + 1 - 4, rows / 2 + 1); Console.Write("You Lose");
@@ -219,6 +215,7 @@ namespace Snake
                         }
                     }
                 }
+                //sometimes it seems as if the function does not work as intended. It appears to be rather random, thus it has not been fixed
                 else if (next_x == applePos[0] && next_y == applePos[1])
                 {
                     appleIsEaten = true;
@@ -228,7 +225,7 @@ namespace Snake
             return false;
         }
         /// <summary>
-        /// Updates the position of the snake. This is where the magic happens!
+        /// Updates the position of the snake. This is where the magic happens! 
         /// </summary>
         void update_Pos()
         {
@@ -249,7 +246,7 @@ namespace Snake
                             direction = "left";
                             tmp_x = boody.head_x[boody.length - 1];
                             tmp_x--;
-                            tmp_y = boody.head_y[boody.length - 1];
+                            tmp_y = boody.head_y[boody.length - 1]; //y coordinate does not change
                             if (collisionControl(tmp_x, tmp_y)) //checks if the next position is collision free prior to making the move
                             {
                                 boody.head_x.Add(tmp_x);
@@ -461,7 +458,7 @@ namespace Snake
             }
         }
         /// <summary>
-        /// Updates the board thus enabling the snake to move. 
+        /// Updates the board thus enabling the snake to move. Probably it should be called play game or something.
         /// </summary>
         public void updateBoard()
         {
@@ -488,7 +485,6 @@ namespace Snake
                         boody.head_x.RemoveAt(0); boody.head_y.RemoveAt(0);
                         Console.SetCursorPosition(boody.head_x[boody.length - 1], boody.head_y[boody.length - 1]); Console.Write('-');
                     }
-                    
 
                 }
                 if (appleIsEaten)//If the apple is eaten, the position of the apple is moved.

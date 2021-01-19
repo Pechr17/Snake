@@ -7,7 +7,7 @@ using System.Net.Sockets;
 namespace Snake
 {    
     /// <summary>
-    /// Class used to establish and send message.
+    /// Class used to establish and send message. 
     /// </summary>
     public class SocketClient
     {
@@ -29,7 +29,7 @@ namespace Snake
             {
                 // Connect to a Remote server  
                 // Get Host IP Address that is used to establish a connection  
-                // In this case, we get one IP address of localhost that is IP : 127.0.0.1  
+                
                 // If a host has multiple addresses, you will get a list of addresses  
                 
                 host = Dns.GetHostEntry(Dns.GetHostName()); //finds host IP addresses
@@ -39,7 +39,7 @@ namespace Snake
                 // Create a TCP/IP  socket.    
                 
                 sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                /* */
+                
                 // Connect the socket to the remote endpoint. Catch any errors.    
                 try
                 {
@@ -84,5 +84,9 @@ namespace Snake
                 Console.WriteLine(e.ToString());
             }
         }
+
+        //sendMsg()
+        //shutDown()
+        //createclient()
     }
 }
